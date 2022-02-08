@@ -3,9 +3,12 @@ const app = express()
 const port = 3000
 
 const {User} = require('./models/User') 
+const {auth} = require('./middleware/auth')
 
 const config = require('./config/key')
 const cookieParser = require('cookie-parser')
+
+
 
 app.use(express.urlencoded({extended : true}))
 app.use(express.json())
@@ -17,7 +20,7 @@ mongoose.connect('mongodb+srv://minseok:1234@boiler-plate.rabed.mongodb.net/myFi
   .catch(err=> console.log(err))
 
 
-app.post('/register', (req,res) =>{
+app.post('/api/users/register', (req,res) =>{
   // 회원 가입 할때 필요한 정보들
 
   const user = new User(req.body);
@@ -60,6 +63,20 @@ app.post('/login', (req,res)=>{
     })
   })
 })
+
+// 인증
+app.get('/api/users/auth', auth, (req,res) => {
+  // 여기까지 왔다는것은 인증이 true라는 것.
+  res.status(200).json({
+    _id : req.user._id,
+    isAdmin : req.user.role === 0 ? false : true,
+    isAuth : true,
+    email : req.user.email,
+    name : req.user.name
+  })
+})
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
