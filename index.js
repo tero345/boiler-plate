@@ -8,8 +8,6 @@ const {auth} = require('./middleware/auth')
 const config = require('./config/key')
 const cookieParser = require('cookie-parser')
 
-
-
 app.use(express.urlencoded({extended : true}))
 app.use(express.json())
 app.use(cookieParser())
@@ -24,7 +22,6 @@ app.post('/api/users/register', (req,res) =>{
   // 회원 가입 할때 필요한 정보들
 
   const user = new User(req.body);
-  console.log(user);
 
   user.save((err, doc) => {
     if(err) return res.json({success: false, err})
@@ -57,9 +54,8 @@ app.post('/login', (req,res)=>{
                 // 토큰저장(쿠키/로컬스토리지/세션)
                 res.cookie('x_auth', user.token)
                 .status(200)
-                .json({loginSuccess:true, ObjectId:user._id})
+                .json({loginSuccess:true, userId:user._id})
             })
-        
     })
   })
 })
@@ -76,6 +72,16 @@ app.get('/api/users/auth', auth, (req,res) => {
   })
 })
 
+// 로그아웃
+app.get('/logout', auth, (req, res) => {
+  console.log(req.user);
+  User.findOneAndUpdate({ _id : req.user._id}, { token : ""}, (err, user) => {
+      if(err) return res.json({ success : false, err});
+      return res.status(200).send({
+        success : true
+      })
+    })
+})
 
 
 app.listen(port, () => {
