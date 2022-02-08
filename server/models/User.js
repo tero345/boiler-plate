@@ -56,7 +56,7 @@ userSchema.pre('save', function(next){
     }
 })
 
-
+// 패스워드 비교
 userSchema.methods.comparePassword = function(plainPassword, cb){
      bcrypt.compare(plainPassword, this.password, function (err, isMatch) {
          if(err) return cb(err); 
