@@ -8,9 +8,16 @@ const {auth} = require('./middleware/auth')
 const config = require('./config/key')
 const cookieParser = require('cookie-parser')
 
+const cors = require('cors')
+let cors_origin = ['http://localhost:3001']
+
 app.use(express.urlencoded({extended : true}))
 app.use(express.json())
 app.use(cookieParser())
+app.use(cors({
+  origin : cors_origin,
+  credentials : true,
+}))
 
 const mongoose = require('mongoose')
 mongoose.connect('mongodb+srv://minseok:1234@boiler-plate.rabed.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {})
@@ -81,6 +88,10 @@ app.get('/logout', auth, (req, res) => {
         success : true
       })
     })
+})
+
+app.get('/api/hello', (req, res)=>{
+  res.send("전송!!!")
 })
 
 
