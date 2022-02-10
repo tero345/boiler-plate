@@ -4,11 +4,27 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// redux
+import { Provider } from 'react-redux';
+import {applyMiddleware, createStore} from 'redux';
+import promiseMiidleware from 'redux-promise';
+import ReduxThunk from 'redux-thunk';
+
+import Reducer from './reducers';
+
+// ui temp
+import 'antd/dist/antd.min.css';
+
+const createStoreWithMiddleware = applyMiddleware(promiseMiidleware, ReduxThunk)(createStore)
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  <Provider store={createStoreWithMiddleware(Reducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__&&window.__REDUX_DEVTOOLS_EXTENSION__()
+    )}>
+    <App/>
+  </Provider>
+
+  , document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

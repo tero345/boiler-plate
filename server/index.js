@@ -8,8 +8,9 @@ const {auth} = require('./middleware/auth')
 const config = require('./config/key')
 const cookieParser = require('cookie-parser')
 
+// cross site
 const cors = require('cors')
-let cors_origin = ['http://localhost:3001']
+let cors_origin = ['http://localhost:3000']
 
 app.use(express.urlencoded({extended : true}))
 app.use(express.json())
