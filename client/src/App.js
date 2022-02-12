@@ -36,9 +36,9 @@ function App() {
           of them to render at a time
         */}
         <Routes>
-          <Route exact path="/" element = {<LandingPage/>}/>
-          <Route exact path="/login" element = {<LoginPage/>}/>
-          <Route exact path="/register" element = {<RegisterPage/>}/>
+          <Route exact path="/" element = { <LandingPage/> }/>
+          <Route exact path="/login" element = { <LoginPage/> }/>
+          <Route exact path="/register" element = { <RegisterPage/> }/>
         </Routes>
       </div>
     </Router>

@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux';
 import {loginUser} from '../../../actions/user_action';
 import { useNavigate } from 'react-router-dom';
 
-function LoginPage(props) {
+function LoginPage() {
     const dispatch = useDispatch();
 
     const [Email, setEmail] = useState("");
@@ -37,7 +37,6 @@ function LoginPage(props) {
 
         dispatch(loginUser(param)).then(response => {
             if(response.payload.loginSuccess){
-                //props.history.push('/')
                 navigate('/')
             }else{
                 alert('Error');
